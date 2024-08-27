@@ -1,39 +1,46 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
+plugins {
+    id("java")
+    id("org.jetbrains.intellij") version "1.17.4"
+    id("org.jetbrains.kotlin.jvm") version "1.9.24"
 }
 
-plugins {
-    id("idea")
-    id("org.jetbrains.intellij") version "0.3.5"
-    java
-    kotlin("jvm") version "1.2.51"
-}
+group = "com.mordisk.eventsounds"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
 }
 
-intellij {
-    version = "2018.2" //for a full list of IntelliJ IDEA releases please see https://www.jetbrains.com/intellij-repository/releases
-    updateSinceUntilBuild = false
-    pluginName = "event-sounds"
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
-group = "com.github.essquilo"
-version = "0.1.1"
+intellij {
+    version.set("2023.2.6")
+}
+
+tasks {
+    buildSearchableOptions {
+        enabled = false
+    }
+
+    patchPluginXml {
+        version.set("${project.version}")
+        sinceBuild.set("232")
+        untilBuild.set("241.*")
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "17"
+    }
+
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "17"
+    }
+}
 
 dependencies {
-    compile(kotlin("stdlib-jdk8"))
-    compile("com.googlecode.soundlibs", "jlayer", "1.0.1-1")
-}
-
-configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-}
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    implementation("com.googlecode.soundlibs:jlayer:1.0.1.4")
 }

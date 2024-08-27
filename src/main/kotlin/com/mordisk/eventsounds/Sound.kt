@@ -23,7 +23,7 @@
  *
  */
 
-package com.github.essquilo.eventsounds
+package com.mordisk.eventsounds
 
 import com.intellij.openapi.diagnostic.Logger
 import javazoom.jl.player.Player

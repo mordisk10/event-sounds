@@ -23,7 +23,7 @@
  *
  */
 
-package com.github.essquilo.eventsounds
+package com.mordisk.eventsounds
 
 import com.intellij.execution.ExecutionListener
 import com.intellij.execution.ExecutionManager
@@ -33,13 +33,13 @@ import com.intellij.openapi.components.ProjectComponent
 import com.intellij.openapi.project.Project
 import com.intellij.util.messages.MessageBusConnection
 
-class EventSoundsComponent(project: Project) : ProjectComponent {
-    private val busConnection: MessageBusConnection = project.messageBus.connect()
+class ESComponent(project: Project) : ProjectComponent {
+    private val bus: MessageBusConnection = project.messageBus.connect()
     val success = Sound("success")
     val error = Sound("error")
 
     init {
-        busConnection.subscribe(ExecutionManager.EXECUTION_TOPIC, object : ExecutionListener {
+        bus.subscribe(ExecutionManager.EXECUTION_TOPIC, object : ExecutionListener {
             override fun processStarted(executorId: String, env: ExecutionEnvironment, handler: ProcessHandler) {
                 super.processStarted(executorId, env, handler)
                 stopAll()
@@ -60,7 +60,7 @@ class EventSoundsComponent(project: Project) : ProjectComponent {
     }
 
     override fun disposeComponent() {
-        busConnection.disconnect()
+        bus.disconnect()
     }
 
     override fun projectClosed() {

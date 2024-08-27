@@ -1,19 +1,22 @@
 <idea-plugin>
-    <id>com.github.essquilo.eventsounds</id>
-    <name>event-sounds</name>
-    <vendor email="esquilo1994@gmail.com">Ivan Prymak</vendor>
-    <idea-version since-build="173"/>
+    <id>com.mordisk.eventsounds</id>
+    <name>Event-Sounds</name>
+    <vendor email="mordisk100@gmail.com">mordisk</vendor>
+    <idea-version since-build="232"/>
 
     <description><![CDATA[
-      <h1>event-sounds</h1>
+      <h1>Event Sounds</h1>
       <br/>
-      <a href="https://github.com/Essquilo/intellij-event-sounds-plugin">GitHub</a>
+      This is a plugin for IntelliJ IDEA that plays sounds when an event occurs.
       <br/>
-      WIP: unfortunately, the  <a href="https://plugins.jetbrains.com/plugin/1243-event-sounds">old plugin</a> for playing sounds when run configuration starts/fails does not seem to work anymore, so here I am making new version which works.
+      <br/>
+      The reason i **remade this plugin** is that, I can not seem to find a plugin that does **adds sounds when an event occurs**.
+      <br/>
+      There are some plugins achieved this, But they are **not updated** or they are **not working properly**. So i decided to **update it**.
     ]]></description>
 
     <change-notes><![CDATA[
-      Naming fix.
+      Released first version
     ]]>
     </change-notes>
 
@@ -21,7 +24,7 @@
 
     <project-components>
         <component>
-            <implementation-class>com.github.essquilo.eventsounds.EventSoundsComponent</implementation-class>
+            <implementation-class>com.mordisk.eventsounds.ESComponent</implementation-class>
         </component>
     </project-components>
 </idea-plugin>
