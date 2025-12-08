@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     id("java")
     id("org.jetbrains.intellij") version "1.17.4"
@@ -19,6 +17,7 @@ java {
 
 intellij {
     version.set("2023.2.6")
+    updateSinceUntilBuild.set(false)
 }
 
 tasks {
@@ -29,7 +28,6 @@ tasks {
     patchPluginXml {
         version.set("${project.version}")
         sinceBuild.set("232")
-        untilBuild.set("241.*")
     }
 
     compileKotlin {

@@ -27,4 +27,12 @@
             <implementation-class>com.mordisk.eventsounds.ESComponent</implementation-class>
         </component>
     </project-components>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable
+                id="preferences.eventSounds"
+                parentId="tools"
+                displayName="Event Sounds"
+                instance="com.mordisk.eventsounds.EventSoundsConfigurable"/>
+    </extensions>
 </idea-plugin>

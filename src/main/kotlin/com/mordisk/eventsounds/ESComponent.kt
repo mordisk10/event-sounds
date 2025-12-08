@@ -42,14 +42,20 @@ class ESComponent(project: Project) : ProjectComponent {
         bus.subscribe(ExecutionManager.EXECUTION_TOPIC, object : ExecutionListener {
             override fun processStarted(executorId: String, env: ExecutionEnvironment, handler: ProcessHandler) {
                 super.processStarted(executorId, env, handler)
-                stopAll()
-                success.play()
+                val settings = EventSoundsSettings.getInstance().state
+                if (settings.enableOnRunStart) {
+                    stopAll()
+                    success.play(settings.customRunStartPath.ifBlank { null })
+                }
             }
 
             override fun processNotStarted(executorId: String, env: ExecutionEnvironment) {
                 super.processNotStarted(executorId, env)
-                stopAll()
-                error.play()
+                val settings = EventSoundsSettings.getInstance().state
+                if (settings.enableOnRunNotStarted) {
+                    stopAll()
+                    error.play(settings.customRunNotStartedPath.ifBlank { null })
+                }
             }
         })
     }
@@ -59,6 +65,7 @@ class ESComponent(project: Project) : ProjectComponent {
         error.stop()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun disposeComponent() {
         bus.disconnect()
     }
@@ -67,6 +74,7 @@ class ESComponent(project: Project) : ProjectComponent {
         stopAll()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun initComponent() {}
 
     override fun projectOpened() {}

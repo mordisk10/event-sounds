@@ -28,31 +28,52 @@ package com.mordisk.eventsounds
 import com.intellij.openapi.diagnostic.Logger
 import javazoom.jl.player.Player
 import java.io.BufferedInputStream
+import java.io.File
+import java.io.FileInputStream
 
 private val log = Logger.getInstance(Sound::class.java)
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class Sound(private val name: String) {
 
     var player: Player? = null
-    fun play() {
-        val filename = "$name.mp3"
+
+    /**
+     * Play a sound. If [customPath] is provided and points to an existing file, that file is used.
+     * Otherwise, a bundled resource with the name provided in the constructor is used.
+     */
+    fun play(customPath: String? = null) {
+        val resourceFilename = "$name.mp3"
         try {
-            val buffer = BufferedInputStream(javaClass.getResourceAsStream(filename))
-            player = Player(buffer)
-            object : Thread() {
+            // Stop currently playing sound for this instance before starting new one
+            stop()
+
+            val input = if (!customPath.isNullOrBlank()) {
+                val file = File(customPath)
+                if (file.exists() && file.isFile) {
+                    BufferedInputStream(FileInputStream(file))
+                } else {
+                    log.warn("Custom sound path not found or not a file: ${'$'}customPath. Falling back to resource ${'$'}resourceFilename")
+                    BufferedInputStream(javaClass.getResourceAsStream(resourceFilename))
+                }
+            } else {
+                BufferedInputStream(javaClass.getResourceAsStream(resourceFilename))
+            }
+
+            player = Player(input)
+            // run in new thread to play in background
+            object : Thread("EventSounds-Player-${'$'}name") {
                 override fun run() {
                     try {
                         player?.play()
                     } catch (e: Exception) {
-                        log.error("Problem playing file $filename", e)
+                        log.error("Problem playing sound ${'$'}{customPath ?: resourceFilename}", e)
                     }
-
                 }
             }.start()
         } catch (e: Exception) {
-            log.error("Problem playing file $filename", e)
+            log.error("Problem preparing sound ${'$'}{customPath ?: resourceFilename}", e)
         }
-        // run in new thread to play in background
     }
 
     fun stop() {

@@ -21,5 +21,5 @@ This plugin is **not yet released**. I am working on it and i will release it as
 
 ## What's Left
 - ✅ Forked the plugin and **updated** environment to the **latest** version.
-- ❌ Create a **GUI** to add **custom** sounds for only **selected** events.
-- ❌ **Publish** the plugin, add more **features**
+- ✅ Create a **GUI** to add **custom** sounds for only **selected** events. You can find it under: Settings/Preferences → Tools → Event Sounds
+- ⏳ **Publish** the plugin, add more **features**
