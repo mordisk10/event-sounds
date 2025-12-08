@@ -1,8 +1,7 @@
 # Event Sounds 🔊
 
-[![Version](https://img.shields.io/jetbrains/plugin/v/EventSounds?label=Version)](https://plugins.jetbrains.com/plugin/EventSounds)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/EventSounds?label=Downloads)](https://plugins.jetbrains.com/plugin/EventSounds)
-[![Rating](https://img.shields.io/jetbrains/plugin/r/rating/EventSounds?label=Rating)](https://plugins.jetbrains.com/plugin/EventSounds)
+[![Downloads](https://img.shields.io/jetbrains/plugin/d/29305)](https://plugins.jetbrains.com/plugin/29305-fancy-event-sounds)
+[![Rating](https://img.shields.io/jetbrains/plugin/r/stars/29305)](https://plugins.jetbrains.com/plugin/29305-fancy-event-sounds)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 > This is a plugin for IntelliJ IDEA that plays sounds when an event occurs.
@@ -16,11 +15,9 @@ There are some plugins achieved this, But they are **not updated** or they are *
 
 This plugin is forked from [**this plugin**](https://plugins.jetbrains.com/plugin/10976-event-sounds) and that is the continuation of [**that plugin**](https://plugins.jetbrains.com/plugin/1243-event-sounds).
 
-## Current State
-
-<iframe width="245px" height="48px" src="https://plugins.jetbrains.com/embeddable/install/29305"></iframe>
-
 ## What's Left
 - ✅ Forked the plugin and **updated** environment to the **latest** version.
 - ✅ Create a **GUI** to add **custom** sounds for only **selected** events. You can find it under: Settings/Preferences → Tools → Event Sounds
-- ⏳ **Publish** the plugin, add more **features**
+- ✅ **Publish** the plugin, add more **features**
+
+<br>
