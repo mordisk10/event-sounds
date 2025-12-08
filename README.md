@@ -17,7 +17,8 @@ There are some plugins achieved this, But they are **not updated** or they are *
 This plugin is forked from [**this plugin**](https://plugins.jetbrains.com/plugin/10976-event-sounds) and that is the continuation of [**that plugin**](https://plugins.jetbrains.com/plugin/1243-event-sounds).
 
 ## Current State
-This plugin is **not yet released**. I am working on it and i will release it as soon as possible.
+
+<iframe width="245px" height="48px" src="https://plugins.jetbrains.com/embeddable/install/29305"></iframe>
 
 ## What's Left
 - ✅ Forked the plugin and **updated** environment to the **latest** version.

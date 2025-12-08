@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>com.mordisk.eventsounds</id>
-    <name>Event-Sounds</name>
+    <name>Fancy Event Sounds</name>
     <vendor email="mordisk100@gmail.com">mordisk</vendor>
     <idea-version since-build="232"/>
 
@@ -10,9 +10,9 @@
       This is a plugin for IntelliJ IDEA that plays sounds when an event occurs.
       <br/>
       <br/>
-      The reason i **remade this plugin** is that, I can not seem to find a plugin that does **adds sounds when an event occurs**.
+      The reason i remade this plugin is that, I can not seem to find a plugin that does adds sounds when an event occurs.
       <br/>
-      There are some plugins achieved this, But they are **not updated** or they are **not working properly**. So i decided to **update it**.
+      There are some plugins achieved this, But they are not updated or they are not working properly. So i decided to update it.
     ]]></description>
 
     <change-notes><![CDATA[

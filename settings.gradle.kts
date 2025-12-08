@@ -1,4 +1,4 @@
-rootProject.name = "event-sounds"
+rootProject.name = "fancy-event-sounds"
 
 pluginManagement {
   repositories {
