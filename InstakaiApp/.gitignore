@@ -1,0 +1,13 @@
+## Generated Xcode project — regenerate with `make project`
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+DerivedData/
+*.xcuserstate
+
+## SwiftPM
+.build/
+.swiftpm/
+
+## macOS
+.DS_Store
