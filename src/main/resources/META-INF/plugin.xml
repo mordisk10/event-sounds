@@ -1,22 +1,71 @@
 <idea-plugin>
     <id>com.mordisk.eventsounds</id>
     <name>Fancy Event Sounds</name>
-    <vendor email="mordisk100@gmail.com">mordisk</vendor>
+    <vendor email="mordisk100@gmail.com" url="https://github.com/mordisk10/event-sounds">mordisk</vendor>
     <idea-version since-build="232"/>
 
     <description><![CDATA[
-      <h1>Event Sounds</h1>
-      <br/>
-      This is a plugin for IntelliJ IDEA that plays sounds when an event occurs.
-      <br/>
-      <br/>
-      The reason i remade this plugin is that, I can not seem to find a plugin that does adds sounds when an event occurs.
-      <br/>
-      There are some plugins achieved this, But they are not updated or they are not working properly. So i decided to update it.
+      <h2>Give your IDE a voice 🔊</h2>
+
+      <p>
+        <b>Fancy Event Sounds</b> plays a sound when something happens in your IDE, so you get
+        feedback without having to watch the Run window. You hit Run, look away at your browser
+        or a second monitor, and your ears tell you what happened.
+      </p>
+
+      <h3>What it does</h3>
+      <ul>
+        <li><b>Run started</b> &mdash; a sound the moment a run or debug configuration launches.</li>
+        <li><b>Run failed to start</b> &mdash; instant feedback when a configuration cannot launch,
+            instead of silently staring at an empty console.</li>
+        <li><b>Per-event toggles</b> &mdash; turn on only the events you actually care about.</li>
+        <li><b>Your own sounds</b> &mdash; point any event at a custom <code>.mp3</code> file.</li>
+        <li><b>Never blocks the IDE</b> &mdash; audio plays on a background thread, and a new event
+            stops the previous sound so notifications never pile up.</li>
+      </ul>
+
+      <h3>Configuration</h3>
+      <p>
+        Everything lives under <b>Settings/Preferences &rarr; Tools &rarr; Event Sounds</b>.
+        Toggle each event, and optionally browse for a custom <code>.mp3</code>. Leave a path empty
+        to use the bundled sound. If a custom file goes missing, the plugin falls back to the
+        bundled sound rather than failing.
+      </p>
+      <p>
+        Settings are stored application-wide, so they apply to every project in the IDE.
+      </p>
+
+      <h3>Why this plugin exists</h3>
+      <p>
+        Plugins that did this used to exist, but they stopped being maintained and broke on modern
+        IDEs. This is a maintained fork, rebuilt against a current IntelliJ Platform and actively
+        developed. It continues the work of
+        <a href="https://plugins.jetbrains.com/plugin/10976-event-sounds">Event Sounds</a>, which
+        itself continued
+        <a href="https://plugins.jetbrains.com/plugin/1243-event-sounds">the original</a>.
+      </p>
+
+      <p>
+        Source, roadmap and issue tracker:
+        <a href="https://github.com/mordisk10/event-sounds">github.com/mordisk10/event-sounds</a>.
+        Feature requests for new events are welcome.
+      </p>
     ]]></description>
 
     <change-notes><![CDATA[
-      Released first version
+      <h3>1.0.1</h3>
+      <ul>
+        <li>Added a settings screen under <b>Tools &rarr; Event Sounds</b>.</li>
+        <li>Each event can now be enabled or disabled independently.</li>
+        <li>Custom <code>.mp3</code> files can be selected per event, with an automatic fallback to
+            the bundled sound when a file is missing.</li>
+        <li>Rebuilt against the 2023.2 platform (build 232 and newer).</li>
+      </ul>
+
+      <h3>1.0.0</h3>
+      <ul>
+        <li>First release: sounds for run configurations that start and that fail to start.</li>
+      </ul>
     ]]>
     </change-notes>
 
