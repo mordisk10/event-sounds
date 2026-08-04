@@ -71,11 +71,10 @@
 
     <depends>com.intellij.modules.lang</depends>
 
-    <project-components>
-        <component>
-            <implementation-class>com.mordisk.eventsounds.ESComponent</implementation-class>
-        </component>
-    </project-components>
+    <projectListeners>
+        <listener class="com.mordisk.eventsounds.ExecutionSoundListener"
+                  topic="com.intellij.execution.ExecutionListener"/>
+    </projectListeners>
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable
