@@ -6,6 +6,7 @@
 
 **Give your IDE a voice.** A JetBrains plugin that plays a sound when something happens in your IDE — your run starts, your build breaks, your tests go green.
 
+[![Build](https://github.com/mordisk10/event-sounds/actions/workflows/build.yml/badge.svg)](https://github.com/mordisk10/event-sounds/actions/workflows/build.yml)
 [![JetBrains Marketplace](https://img.shields.io/jetbrains/plugin/v/29305?label=Marketplace&logo=jetbrains&logoColor=white&color=FF318C)](https://plugins.jetbrains.com/plugin/29305-fancy-event-sounds)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/29305?label=Downloads&color=6C4BF5)](https://plugins.jetbrains.com/plugin/29305-fancy-event-sounds)
 [![Rating](https://img.shields.io/jetbrains/plugin/r/stars/29305?label=Rating&color=FFB400)](https://plugins.jetbrains.com/plugin/29305-fancy-event-sounds)
