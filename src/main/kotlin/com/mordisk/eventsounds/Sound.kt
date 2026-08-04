@@ -28,55 +28,63 @@ package com.mordisk.eventsounds
 import com.intellij.openapi.diagnostic.Logger
 import javazoom.jl.player.Player
 import java.io.BufferedInputStream
-import java.io.File
 import java.io.FileInputStream
+import java.io.InputStream
 
 private val log = Logger.getInstance(Sound::class.java)
 
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class Sound(private val name: String) {
 
+    @Volatile
     var player: Player? = null
+        private set
 
     /**
-     * Play a sound. If [customPath] is provided and points to an existing file, that file is used.
-     * Otherwise, a bundled resource with the name provided in the constructor is used.
+     * Play a sound. If [customPath] points at a readable file, that file is used;
+     * otherwise the bundled sound for this instance's name is played.
      */
     fun play(customPath: String? = null) {
-        val resourceFilename = "$name.mp3"
+        val source = SoundResolver.resolve(name, customPath)
         try {
-            // Stop currently playing sound for this instance before starting new one
+            // Stop whatever this instance is currently playing before starting again.
             stop()
 
-            val input = if (!customPath.isNullOrBlank()) {
-                val file = File(customPath)
-                if (file.exists() && file.isFile) {
-                    BufferedInputStream(FileInputStream(file))
-                } else {
-                    log.warn("Custom sound path not found or not a file: ${'$'}customPath. Falling back to resource ${'$'}resourceFilename")
-                    BufferedInputStream(javaClass.getResourceAsStream(resourceFilename))
-                }
-            } else {
-                BufferedInputStream(javaClass.getResourceAsStream(resourceFilename))
-            }
+            val input = openStream(source) ?: return
+            val current = Player(input)
+            player = current
 
-            player = Player(input)
-            // run in new thread to play in background
-            object : Thread("EventSounds-Player-${'$'}name") {
+            // Play off the calling thread so the IDE never waits on audio.
+            object : Thread("EventSounds-Player-$name") {
                 override fun run() {
                     try {
-                        player?.play()
+                        current.play()
                     } catch (e: Exception) {
-                        log.error("Problem playing sound ${'$'}{customPath ?: resourceFilename}", e)
+                        log.warn("Problem playing sound $source", e)
+                    } finally {
+                        current.close()
                     }
                 }
             }.start()
         } catch (e: Exception) {
-            log.error("Problem preparing sound ${'$'}{customPath ?: resourceFilename}", e)
+            log.warn("Problem preparing sound $source", e)
+        }
+    }
+
+    private fun openStream(source: SoundSource): InputStream? = when (source) {
+        is SoundSource.CustomFile -> BufferedInputStream(FileInputStream(source.file))
+        is SoundSource.Bundled -> {
+            val stream = javaClass.getResourceAsStream(source.resourceName)
+            if (stream == null) {
+                log.warn("Bundled sound ${source.resourceName} is missing from the plugin jar")
+                null
+            } else {
+                BufferedInputStream(stream)
+            }
         }
     }
 
     fun stop() {
         player?.close()
+        player = null
     }
 }

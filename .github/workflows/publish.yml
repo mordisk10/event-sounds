@@ -1,0 +1,95 @@
+# Publishes the plugin to the JetBrains Marketplace.
+#
+# This workflow NEVER runs on its own. There is no push, tag or schedule
+# trigger — the only way it starts is a human opening the Actions tab and
+# pressing "Run workflow". Nothing reaches the Marketplace by accident.
+#
+# Setup required before the first run:
+#   1. Create a Marketplace permanent token:
+#      https://plugins.jetbrains.com/author/me/tokens
+#   2. Save it in this repository under
+#      Settings -> Secrets and variables -> Actions -> New repository secret
+#      Name: JETBRAINS_MARKETPLACE_TOKEN
+#
+# A password is never used or needed. The token can be revoked at any time
+# without touching the JetBrains account itself.
+
+name: Publish to Marketplace
+
+on:
+  workflow_dispatch:
+    inputs:
+      channel:
+        description: "Release channel"
+        required: true
+        default: "eap"
+        type: choice
+        options:
+          - eap
+          - default
+      dry_run:
+        description: "Build and verify only — do not upload"
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Run tests
+        run: ./gradlew test --stacktrace
+
+      - name: Validate plugin structure
+        run: ./gradlew verifyPlugin --stacktrace
+
+      - name: Build distributable plugin
+        run: ./gradlew buildPlugin --stacktrace
+
+      - name: Upload plugin zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: fancy-event-sounds-plugin
+          path: build/distributions/*.zip
+          if-no-files-found: error
+
+      - name: Confirm token is configured
+        if: ${{ !inputs.dry_run }}
+        env:
+          PUBLISH_TOKEN: ${{ secrets.JETBRAINS_MARKETPLACE_TOKEN }}
+        run: |
+          if [ -z "$PUBLISH_TOKEN" ]; then
+            echo "::error::JETBRAINS_MARKETPLACE_TOKEN is not set. Add it under Settings -> Secrets and variables -> Actions."
+            exit 1
+          fi
+          echo "Token is present."
+
+      - name: Publish
+        if: ${{ !inputs.dry_run }}
+        env:
+          PUBLISH_TOKEN: ${{ secrets.JETBRAINS_MARKETPLACE_TOKEN }}
+        run: ./gradlew publishPlugin -PpluginChannel=${{ inputs.channel }} --stacktrace
+
+      - name: Dry run summary
+        if: ${{ inputs.dry_run }}
+        run: |
+          echo "### Dry run complete :white_check_mark:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Tests passed, the plugin was validated and the zip was built." >> $GITHUB_STEP_SUMMARY
+          echo "Nothing was uploaded to the Marketplace." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Re-run with **dry_run unchecked** to publish." >> $GITHUB_STEP_SUMMARY
