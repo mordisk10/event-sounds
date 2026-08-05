@@ -56,9 +56,16 @@ struct HomeView: View {
 
     // MARK: - Sections
 
+    /// First name only — a full name pushes the greeting onto two lines.
+    private var firstName: String {
+        guard let name = auth.account?.name,
+              let first = name.split(separator: " ").first else { return "" }
+        return String(first)
+    }
+
     private var greeting: some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text("\(lang.t(.homeGreeting)), \(auth.account?.name.split(separator: " ").first.map(String.init) ?? "")")
+            Text("\(lang.t(.homeGreeting)), \(firstName)")
                 .font(.iaTitle)
                 .foregroundStyle(Theme.Palette.textPrimary)
             Text(lang.t(.homeSubtitle))

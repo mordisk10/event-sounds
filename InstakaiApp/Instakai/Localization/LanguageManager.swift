@@ -34,15 +34,3 @@ final class LanguageManager: ObservableObject {
         "\(count) \(key.value(for: language))"
     }
 }
-
-/// Lets any view read the manager without threading it through initialisers.
-private struct LanguageManagerKey: EnvironmentKey {
-    static let defaultValue = LanguageManager()
-}
-
-extension EnvironmentValues {
-    var lang: LanguageManager {
-        get { self[LanguageManagerKey.self] }
-        set { self[LanguageManagerKey.self] = newValue }
-    }
-}

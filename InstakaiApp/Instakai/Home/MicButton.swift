@@ -96,7 +96,9 @@ struct MicButton: View {
         .pushEffect(isPressed: isPressed, intensity: .pronounced)
         .contentShape(Circle())
         .gesture(gesture)
-        .accessibilityLabel(lang.t(.homeMicListening))
+        .accessibilityLabel(lang.t(.homeMicAccessibility))
+        .accessibilityValue(lang.t(mode.label))
+        .accessibilityHint(lang.t(mode.hint))
         .accessibilityAddTraits(.isButton)
         .onChange(of: isListening) { _, listening in
             guard listening else {

@@ -29,8 +29,10 @@ targets:
         CFBundleDisplayName: Instakai
         CFBundleShortVersionString: "1.0"
         CFBundleVersion: "1"
-        UILaunchScreen:
-          UIColorName: LaunchBackground
+        # Empty dictionary = system launch screen on the default background.
+        # Naming a colour here requires a matching asset, and a missing one
+        # silently launches black.
+        UILaunchScreen: {}
         # Portrait only: the panoramic slider and the mic layout are designed
         # around a single column.
         UISupportedInterfaceOrientations:
@@ -50,6 +52,10 @@ targets:
         SWIFT_VERSION: "5.9"
         TARGETED_DEVICE_FAMILY: "1"
         ENABLE_USER_SCRIPT_SANDBOXING: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        # Sets the system-level tint (share sheets, alerts) to match
+        # Theme.Palette.accent, which SwiftUI's own .tint cannot reach.
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
 
   InstakaiWidget:
     type: app-extension

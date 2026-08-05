@@ -38,8 +38,6 @@ enum Tab: String, CaseIterable, Identifiable {
 /// The signed-in shell: content, custom tab bar, and the island overlay on top
 /// of both.
 struct RootView: View {
-    @EnvironmentObject private var lang: LanguageManager
-    @EnvironmentObject private var auth: AuthController
     @EnvironmentObject private var island: IslandCenter
 
     @State private var tab: Tab = .home

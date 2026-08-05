@@ -44,6 +44,7 @@ enum S: String, CaseIterable {
     // Home
     case homeGreeting, homeSubtitle
     case homeMicIdlePush, homeMicIdleHold, homeMicListening, homeMicHoldHint
+    case homeMicAccessibility
     case homeModePushToTalk, homeModeStayPut
     case homeModePushToTalkHint, homeModeStayPutHint
     case homeChatHint, homeChatTitle, homeChatPlaceholder, homeChatEmpty
@@ -104,7 +105,19 @@ enum S: String, CaseIterable {
     case search, loading, error, retry, on, off, yes, no
 
     /// `(turkish, english)` for every key.
-    private static let table: [S: (String, String)] = [
+    ///
+    /// Split across several dictionaries and merged rather than written as one
+    /// literal: a single 200-entry literal is exactly the shape that makes the
+    /// Swift type checker crawl, even with an explicit annotation.
+    private static let table: [S: (String, String)] = {
+        var merged = tabsAndAuth
+        for chunk in [home, automations, pricing, profileAndSettings, helpLegalAndGeneric] {
+            merged.merge(chunk) { current, _ in current }
+        }
+        return merged
+    }()
+
+    private static let tabsAndAuth: [S: (String, String)] = [
         .tabHome: ("Ana", "Home"),
         .tabAutomations: ("Otomasyon", "Automations"),
         .tabPlans: ("Planlar", "Plans"),
@@ -141,9 +154,12 @@ enum S: String, CaseIterable {
         .authInvalidEmail: ("Geçerli bir e-posta gir.", "Enter a valid email."),
         .authShortPassword: ("Parola en az 8 karakter olmalı.", "Password must be at least 8 characters."),
         .authPasswordMismatch: ("Parolalar eşleşmiyor.", "Passwords don't match."),
-        .authLinkSent: ("Bağlantı gönderildi.", "Link sent."),
+        .authLinkSent: ("Bağlantı gönderildi.", "Link sent.")
+    ]
 
+    private static let home: [S: (String, String)] = [
         .homeGreeting: ("Selam", "Hey"),
+        .homeMicAccessibility: ("Mikrofon", "Microphone"),
         .homeSubtitle: ("Konuşarak ya da yazarak başla.", "Start by speaking or typing."),
         .homeMicIdlePush: ("Konuşmak için basılı tut", "Hold to talk"),
         .homeMicIdleHold: ("Başlatmak için dokun", "Tap to start"),
@@ -174,8 +190,10 @@ enum S: String, CaseIterable {
         .widgetVoiceTitle: ("Ses komutu", "Voice commands"),
         .widgetVoiceBody: ("9 komut çalıştı", "9 commands ran"),
         .widgetStreakTitle: ("Seri", "Streak"),
-        .widgetStreakBody: ("4 gündür kesintisiz", "4 days unbroken"),
+        .widgetStreakBody: ("4 gündür kesintisiz", "4 days unbroken")
+    ]
 
+    private static let automations: [S: (String, String)] = [
         .autoTitle: ("Otomasyonlar", "Automations"),
         .autoSubtitle: ("Hareket ve komutlarını buradan kurarsın.",
                         "Set up your gestures and commands here."),
@@ -226,8 +244,10 @@ enum S: String, CaseIterable {
         .autoSimple: ("Basit", "Simple"),
         .autoTechnical: ("Teknik", "Technical"),
         .autoShowTechnical: ("Teknik ayarları göster", "Show technical settings"),
-        .autoHideTechnical: ("Teknik ayarları gizle", "Hide technical settings"),
+        .autoHideTechnical: ("Teknik ayarları gizle", "Hide technical settings")
+    ]
 
+    private static let pricing: [S: (String, String)] = [
         .planTitle: ("Planlar", "Plans"),
         .planSubtitle: ("İstediğin zaman değiştir ya da iptal et.", "Change or cancel any time."),
         .planMonthly: ("Aylık", "Monthly"),
@@ -248,8 +268,10 @@ enum S: String, CaseIterable {
         .planPerYear: ("/yıl", "/yr"),
         .planRestore: ("Satın alımları geri yükle", "Restore purchases"),
         .planCompare: ("Planları karşılaştır", "Compare plans"),
-        .planFeature: ("Özellik", "Feature"),
+        .planFeature: ("Özellik", "Feature")
+    ]
 
+    private static let profileAndSettings: [S: (String, String)] = [
         .profileTitle: ("Profil", "Profile"),
         .profileAccount: ("Hesap", "Account"),
         .profileSettings: ("Ayarlar", "Settings"),
@@ -273,8 +295,10 @@ enum S: String, CaseIterable {
         .setMicMode: ("Varsayılan mikrofon modu", "Default microphone mode"),
         .setNotifications: ("Bildirimler", "Notifications"),
         .setReset: ("Ayarları sıfırla", "Reset settings"),
-        .setResetConfirm: ("Tüm ayarlar varsayılana dönsün mü?", "Reset all settings to default?"),
+        .setResetConfirm: ("Tüm ayarlar varsayılana dönsün mü?", "Reset all settings to default?")
+    ]
 
+    private static let helpLegalAndGeneric: [S: (String, String)] = [
         .helpTitle: ("Yardım ve destek", "Help & support"),
         .helpSearch: ("Yardımda ara", "Search help"),
         .helpFaq: ("Sık sorulanlar", "Frequently asked"),

@@ -1,0 +1,105 @@
+name: Instakai
+
+# Two things get verified here, because neither can be checked on the machine
+# the code was written on:
+#
+#   1. InstakaiCore's unit tests — pure Foundation, so they run natively.
+#   2. That the iOS app and its widget extension actually compile.
+#
+# The build uses a simulator destination with signing switched off, so no
+# certificates or provisioning profiles are needed. See "Device builds" at the
+# bottom of this file for what it would take to produce something installable.
+
+on:
+  push:
+    paths:
+      - 'Instakai/**'
+      - 'InstakaiApp/**'
+      - '.github/workflows/instakai.yml'
+  pull_request:
+    paths:
+      - 'Instakai/**'
+      - 'InstakaiApp/**'
+      - '.github/workflows/instakai.yml'
+  workflow_dispatch:
+
+concurrency:
+  # A new push supersedes an in-flight run on the same branch; macOS runners
+  # are the expensive ones to leave queued.
+  group: instakai-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core:
+    name: Core · swift test
+    # Pinned rather than macos-latest: the app targets iOS 17, and this image
+    # ships the matching Xcode 15 / iOS 17 SDK.
+    runs-on: macos-14
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain versions
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Run tests
+        working-directory: Instakai
+        run: swift test
+
+  app:
+    name: UI · xcodebuild
+    runs-on: macos-14
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate project
+        working-directory: InstakaiApp
+        run: xcodegen generate
+
+      - name: Build app and widget
+        working-directory: InstakaiApp
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project Instakai.xcodeproj \
+            -scheme Instakai \
+            -destination 'generic/platform=iOS Simulator' \
+            -configuration Debug \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO
+
+      - name: Upload simulator build
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: Instakai-simulator-app
+          # Runs in the iOS Simulator via `xcrun simctl install booted Instakai.app`.
+          # This will NOT install on a physical iPhone — that needs signing.
+          path: InstakaiApp/build/Build/Products/Debug-iphonesimulator/Instakai.app
+          retention-days: 14
+          if-no-files-found: error
+
+# ---------------------------------------------------------------------------
+# Device builds
+#
+# Producing an .ipa you can install on your own iPhone needs three secrets that
+# only you can create, from an Apple Developer account:
+#
+#   BUILD_CERTIFICATE_BASE64   Apple Distribution (or Development) .p12,
+#                              base64 encoded
+#   P12_PASSWORD               the password used when exporting that .p12
+#   PROVISIONING_PROFILE_BASE64  a profile matching com.instakai.app
+#
+# With those in the repository's secrets, the `app` job gains a step that
+# imports them into a temporary keychain, and the build switches from
+# `-destination 'generic/platform=iOS Simulator'` to
+# `archive -destination 'generic/platform=iOS'` followed by
+# `-exportArchive`. Say the word and I'll add that job.
+# ---------------------------------------------------------------------------
