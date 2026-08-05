@@ -133,11 +133,21 @@ docs/             Açık sorular
 
 ## Durum
 
-Bu ortamda Swift derleyicisi yoktu — **kod derlenmedi**. Xcode'da ilk açılışta
-küçük düzeltmeler gerekebilir.
+**Derleniyor.** Uygulama ve widget uzantısı CI'da Xcode 16 ile hatasız ve
+uyarısız derleniyor (`** BUILD SUCCEEDED **`). Kod bu depoda Swift derleyicisi
+olmadan yazıldı, o yüzden bunu doğrulayan tek şey CI — yeşil kalmasına dikkat
+edin.
 
-Ayrıca **veriler sahte**: otomasyon istatistikleri, ana sayfa widget'ları ve
-"yapay zekâ" üretimi (şu an anahtar kelime eşleştirmesi) yer tutucu. Arayüz
-akışları gerçek, arkalarındaki servisler değil.
+**Cihazda çalıştırılmadı.** Derlenmek çalışmak değil. Kamera izni akışı, gerçek
+Dynamic Island davranışı, haptikler ve panoramik kaydırıcının dokunmatik hissi
+yalnızca fiziksel bir iPhone'da doğrulanabilir.
+
+**Veriler sahte.** Otomasyon istatistikleri, ana sayfa widget'ları ve "yapay
+zekâ" üretimi (şu an anahtar kelime eşleştirmesi) yer tutucu. Arayüz akışları
+gerçek, arkalarındaki servisler değil.
+
+**Taşıma katmanı seçilmedi.** Instagram'ın gerçekte nasıl sürüleceği (XCUITest /
+harici BLE donanımı / jailbreak) açık bir karar. Arayüz bilinçli olarak bu
+karardan bağımsız kuruldu.
 
 Karar bekleyen 15 nokta: [`docs/OPEN-QUESTIONS.md`](docs/OPEN-QUESTIONS.md).
