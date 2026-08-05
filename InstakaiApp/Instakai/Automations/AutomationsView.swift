@@ -24,7 +24,7 @@ struct AutomationsView: View {
                 list
             }
             .padding(.horizontal, Theme.Spacing.screen)
-            .padding(.bottom, Theme.Spacing.xxl)
+            .padding(.bottom, Theme.Spacing.tabBarClearance)
         }
         .scrollDismissesKeyboard(.interactively)
         .background(Theme.Palette.background)

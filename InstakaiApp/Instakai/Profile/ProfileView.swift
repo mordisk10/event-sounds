@@ -20,7 +20,7 @@ struct ProfileView: View {
                     versionFooter
                 }
                 .padding(.horizontal, Theme.Spacing.screen)
-                .padding(.bottom, Theme.Spacing.xxl)
+                .padding(.bottom, Theme.Spacing.tabBarClearance)
             }
             .background(Theme.Palette.background)
             .navigationTitle(lang.t(.profileTitle))

@@ -46,7 +46,7 @@ struct HomeView: View {
                 micSection
                 widgetSection
             }
-            .padding(.bottom, Theme.Spacing.xxl)
+            .padding(.bottom, Theme.Spacing.tabBarClearance)
         }
         .background(Theme.Palette.background)
         .sheet(isPresented: $showsChat) { ChatView() }

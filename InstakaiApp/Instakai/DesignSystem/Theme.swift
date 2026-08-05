@@ -56,6 +56,10 @@ enum Theme {
         static let xxl: CGFloat = 40
         /// Standard screen side inset.
         static let screen: CGFloat = 20
+        /// Bottom padding every scrolling screen needs so its last row clears
+        /// the floating tab bar. The bar overlays the content rather than
+        /// insetting it, so nothing reserves this space automatically.
+        static let tabBarClearance: CGFloat = 96
     }
 
     enum Radius {

@@ -79,7 +79,7 @@ struct PricingView: View {
                 comparison
                 restoreButton
             }
-            .padding(.bottom, Theme.Spacing.xxl)
+            .padding(.bottom, Theme.Spacing.tabBarClearance)
         }
         .background(Theme.Palette.background)
     }
