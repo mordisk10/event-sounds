@@ -24,7 +24,7 @@ class SoundEventTest {
     @Test
     fun `every event is enabled by default`() {
         val fresh = SettingsState()
-        SoundEvent.entries.forEach { event ->
+        SoundEvent.values().forEach { event ->
             assertTrue("$event should be enabled on a fresh install", event.isEnabledIn(fresh))
         }
     }
@@ -53,7 +53,7 @@ class SoundEventTest {
     @Test
     fun `an unset custom path reads as null rather than empty`() {
         val fresh = SettingsState()
-        SoundEvent.entries.forEach { event ->
+        SoundEvent.values().forEach { event ->
             assertNull("$event should report no custom path", event.customPathIn(fresh))
         }
     }

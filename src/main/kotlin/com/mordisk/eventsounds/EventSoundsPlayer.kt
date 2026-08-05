@@ -14,7 +14,9 @@ import com.intellij.openapi.components.service
 @Service(Service.Level.APP)
 class EventSoundsPlayer : Disposable {
 
-    private val sounds = SoundEvent.entries.associateWith { Sound(it.soundName) }
+    // values() rather than entries: the Kotlin stdlib comes from the target
+    // platform, which is older than the compiler and has no EnumEntries.
+    private val sounds = SoundEvent.values().associateWith { Sound(it.soundName) }
 
     fun play(event: SoundEvent) {
         val state = EventSoundsSettings.getInstance().state
