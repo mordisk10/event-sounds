@@ -1,0 +1,18 @@
+## Xcode
+*.xcodeproj/
+*.xcworkspace/
+xcuserdata/
+DerivedData/
+*.xcuserstate
+
+## Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+## Core ML models are large binaries; ship them via releases, not git.
+*.mlmodel
+*.mlmodelc/
+
+## macOS
+.DS_Store
