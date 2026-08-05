@@ -97,8 +97,15 @@ jobs:
 # ---------------------------------------------------------------------------
 # Device builds
 #
-# Producing an .ipa you can install on your own iPhone needs three secrets that
-# only you can create, from an Apple Developer account:
+# To run this on your own iPhone you do NOT need any of the below — a free
+# Apple ID and Xcode's "Personal Team" is enough. See
+# InstakaiApp/docs/RUN-ON-DEVICE.md.
+#
+# What follows is only for having *CI* produce a distributable .ipa. That does
+# need a paid account: free provisioning profiles are tied to Xcode's UI flow,
+# cannot be minted headlessly, and expire after seven days.
+#
+# Three secrets, which only you can create:
 #
 #   BUILD_CERTIFICATE_BASE64   Apple Distribution (or Development) .p12,
 #                              base64 encoded
