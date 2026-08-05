@@ -71,6 +71,39 @@ open Instakai.xcodeproj
 Gereken: Xcode 15+, iOS 17+ hedef cihaz. Dynamic Island için iPhone 14 Pro ve
 üzeri; diğer cihazlarda Live Activity kilit ekranında görünür.
 
+## Sürekli entegrasyon
+
+`.github/workflows/instakai.yml` her push'ta macOS runner üzerinde çalışır:
+
+| İş | Yaptığı |
+|---|---|
+| `core` | `InstakaiCore` birim testleri (`swift test`) — simülatör gerekmez |
+| `app` | XcodeGen ile projeyi üretip uygulamayı ve widget uzantısını derler |
+
+`app` işi simülatör hedefine, imzalama kapalı olarak derler; sertifika
+gerekmez. Derlenen `.app` artifact olarak yüklenir ve simülatöre kurulabilir:
+
+```bash
+xcrun simctl install booted Instakai.app
+```
+
+**Bu dosya fiziksel iPhone'a kurulmaz.** Cihaza kurulabilir bir `.ipa` için
+Apple Developer hesabınızdan üç secret gerekir — ayrıntısı workflow dosyasının
+sonunda yazılı.
+
+## Uygulama ikonu
+
+`Tools/make_appicon.py` ikonu signed distance field'lardan üretir; yalnızca
+standart kütüphane kullanır, Pillow gerekmez.
+
+```bash
+python3 Tools/make_appicon.py
+```
+
+İşaret ürüne özel: bir Dynamic Island kapsülü ve altından düşen chevron —
+uygulamanın iki tanımlayıcı fikri tek şekilde. Üretici depoda tutuluyor, yani
+ikon açıklanamaz bir ikili dosya değil, yeniden üretilebilir bir çıktı.
+
 ## Yapı
 
 ```
@@ -85,7 +118,9 @@ Instakai/
   Pricing/        Plan kademeleri ve planlar ekranı
   Profile/        Profil, ayarlar, yardım, iletişim, yasal
   Island/         Ekran üstü geri bildirim, kutlama, Live Activity modeli
+  Assets.xcassets Vurgu rengi ve uygulama ikonu
 Widget/           Dynamic Island ve kilit ekranı sunumu
+Tools/            İkon üreteci
 docs/             Açık sorular
 ```
 

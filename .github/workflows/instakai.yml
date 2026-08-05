@@ -16,11 +16,19 @@ on:
       - 'Instakai/**'
       - 'InstakaiApp/**'
       - '.github/workflows/instakai.yml'
+      # Documentation cannot break a build; don't spend macOS runner minutes
+      # on it. Negations must come after the includes that matched.
+      - '!**/*.md'
+      - '!**/docs/**'
   pull_request:
     paths:
       - 'Instakai/**'
       - 'InstakaiApp/**'
       - '.github/workflows/instakai.yml'
+      # Documentation cannot break a build; don't spend macOS runner minutes
+      # on it. Negations must come after the includes that matched.
+      - '!**/*.md'
+      - '!**/docs/**'
   workflow_dispatch:
 
 concurrency:
