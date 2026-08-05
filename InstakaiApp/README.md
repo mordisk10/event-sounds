@@ -63,13 +63,20 @@ tahmin ediliyor.
 ## Kurulum
 
 ```bash
-brew install xcodegen
-make project
-open Instakai.xcodeproj
+cd InstakaiApp
+./Tools/bootstrap.sh com.<kullaniciadin>
 ```
 
-Gereken: Xcode 15+, iOS 17+ hedef cihaz. Dynamic Island için iPhone 14 Pro ve
-üzeri; diğer cihazlarda Live Activity kilit ekranında görünür.
+Betik Xcode sürümünü doğrular, XcodeGen'i kurar, paket kimliğini sizinkiyle
+değiştirir, projeyi üretir ve açar. Elle yapmak isterseniz `make project`.
+
+Gereken: **Xcode 16+** (XcodeGen'in ürettiği proje formatını Xcode 15 açamıyor),
+iOS 17+ hedef cihaz. Dynamic Island için iPhone 14 Pro ve üzeri; diğer
+cihazlarda Live Activity kilit ekranında görünür.
+
+Kendi iPhone'unuza kurmak için ücretli Apple Developer hesabı **gerekmiyor** —
+ücretsiz bir Apple ID yeterli. Adım adım:
+[`docs/RUN-ON-DEVICE.md`](docs/RUN-ON-DEVICE.md).
 
 ## Sürekli entegrasyon
 

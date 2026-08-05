@@ -10,10 +10,30 @@ Gereken tek şey bir Mac.
 | | |
 |---|---|
 | Mac | macOS Sonoma (14) veya üstü |
-| Xcode | 15 veya üstü — App Store'dan ücretsiz |
+| Xcode | **16 veya üstü** — App Store'dan ücretsiz |
 | Apple ID | Sahip olduğunuz herhangi bir Apple ID; ücretli üyelik gerekmez |
 | iPhone | iOS 17+. Dynamic Island için iPhone 14 Pro ve üzeri |
 | Kablo | İlk kurulum için USB. Sonrasında kablosuz da olur |
+
+> **Xcode 15 yetmiyor.** XcodeGen'in ürettiği proje dosyası Xcode 16 formatında
+> (`objectVersion 77`) ve Xcode 15 onu açmayı reddediyor: *"the project is in a
+> future Xcode project file format"*. Ödünç aldığınız Mac'te Xcode eskiyse önce
+> App Store'dan güncelleyin — indirmesi uzun sürer, ilk iş bu olsun.
+
+---
+
+## Hızlı yol: tek komut
+
+```bash
+cd InstakaiApp
+./Tools/bootstrap.sh com.<kullaniciadin>
+```
+
+Bu betik Xcode sürümünü kontrol eder, XcodeGen yoksa kurar, paket kimliğini
+sizinkiyle değiştirir, projeyi üretir ve Xcode'da açar. Sonra doğrudan aşağıdaki
+**4. adıma** geçin.
+
+Aşağısı aynı işi elle yapmak isteyenler için.
 
 ---
 
@@ -137,3 +157,4 @@ Yani: test için ücretsiz yeterli, dağıtım için ücretli lazım.
 | Uygulama açılıp hemen kapanıyor | 7 gün dolmuş — Xcode'dan tekrar ⌘R |
 | `xcodegen: command not found` | `brew install xcodegen` |
 | Widget hedefi imzalanmıyor | Widget kimliği uygulamanınkinin alt kimliği değil |
+| "future Xcode project file format (77)" | Xcode 15 veya daha eski — App Store'dan güncelleyin |

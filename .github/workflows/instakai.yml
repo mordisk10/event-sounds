@@ -40,9 +40,11 @@ concurrency:
 jobs:
   core:
     name: Core · swift test
-    # Pinned rather than macos-latest: the app targets iOS 17, and this image
-    # ships the matching Xcode 15 / iOS 17 SDK.
-    runs-on: macos-14
+    # macos-15 (Xcode 16), not macos-14 (Xcode 15.4): current XcodeGen emits
+    # pbxproj object version 77, and Xcode 15 refuses to open it — "the project
+    # is in a future Xcode project file format". Building against the iOS 18
+    # SDK is fine; the deployment target stays at iOS 17.
+    runs-on: macos-15
 
     steps:
       - uses: actions/checkout@v4
@@ -58,7 +60,7 @@ jobs:
 
   app:
     name: UI · xcodebuild
-    runs-on: macos-14
+    runs-on: macos-15
 
     steps:
       - uses: actions/checkout@v4
