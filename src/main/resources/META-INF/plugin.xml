@@ -4,7 +4,7 @@
     <vendor email="mordisk100@gmail.com" url="https://github.com/mordisk10/event-sounds">mordisk</vendor>
     <idea-version since-build="232"/>
 
-    <description><![CDATA[
+    <description><![CDATA[Fancy Event Sounds adds audio notifications to IntelliJ-based IDEs so you hear when runs start or fail to start.
       <h2>Give your IDE a voice 🔊</h2>
 
       <p>
